@@ -103,7 +103,7 @@ In this example `divs` was assigned a value using `querySelectorAll`. Thus when 
 
 ### Some useful methods :
 
-- `innerHTMLElement` : Targets everything **inside** the html element as a **string**. It only works witl `elements`
+- `innerHTML` : Targets everything **inside** the html element as a **string**. It only works witl `elements`
 
 Thus, you can append "new" html inside of your element with concatenation.
 ```html
@@ -114,6 +114,84 @@ However, it delete's the old html, then, loads the new one. **Warning**, this is
 
 - `outerHTML` : The full HTML of the element. A write operation into elem.outerHTML does not touch elem itself. Instead it gets replaced with the new HTML in the outer context.
 
-- `textContent` : The text inside the element: HTML minus all <tags>. Writing into it puts the text inside the element, with all special characters and tags treated exactly as text. Can safely insert user-generated text and protect from unwanted HTML insertions.
+- `textContent` : The text inside the element: HTML minus all `tags`. Writing into it puts the text inside the element, with all special characters and tags treated exactly as text. Can safely insert user-generated text and protect from unwanted HTML insertions. For instance, calling `textContent` on the div would remove both `h1` and `p` tags. `alert(news.textContent)` would return : *"I'm an H1 I'm a paragraph"* in a single string.
+```html
+<div id="news">
+  <h1>I'm an H1</h1>
+  <p>I'm a paragraph</p>
+</div>
+```
+
+- `data` : the `data` is similar to `innerHTML` but for `text node` 
 
 - `hidden` : When set to true, does the same as CSS display:none.
+
+## Attributes and properties
+
+### DOM Properties
+
+`DOM nodes` being regular JavaScript object, we can add any properties or method we want to them.
+
+```javascript
+//we can add properties to them with the object syntax
+document.body.myData = {
+  name: 'Caesar',
+  title: 'Imperator'
+};
+
+//give them methods
+document.body.sayTagName = function() {
+  alert(this.tagName);
+};
+
+//and give methods to all element with the prototype
+Element.prototype.sayHi = function() {
+  alert(`Hello, I'm ${this.tagName}`);
+};
+```
+
+### HTML Attributes
+When the DOM parses the HTML and finds a **standard** attribute, it turns it into a DOM property.
+
+```html
+<div id="id">*
+  <input type="text">
+</div>
+```
+
+We could use `div.id` or `input.type`. However, it only works for **standard** tags. For example, `body` and `div` do not have a `type` attribute, and only `a` tag have an `href` attribute.
+
+#### Methodes to manipulate attributes
+ - `elem.hasAttribute(name)` : checks for existence
+ - `elem.getAttribute(name)` : gets the value
+ - `elem.setAttribute(name, value)` : sets the value
+ - `elem.removeAttribute(name)` : removes the attribute
+
+
+## Modifying the document
+
+To create a node :
+
+-  `document.createElement(tag)`
+-  `document.createTextNode(tag)`
+
+### Insertion methods
+
+- `node.append(...nodes)` : append nodes or strings at the end of node
+- `node.prepend(...nodes)` : same has `append` but at the beginning of the node
+- `node.before/after(...nodes)` : add the `...nodes` before or after the node **but outside of it**
+- `node.replaceWith(...nodes)` : replace the node with given `...nodes`
+
+![modify the document](/img/modify%20the%20document.png)
+
+However, these methods insert string safely like `textContent`. If we want to insert actual HTML we need to use **`elem.insertAdjacentHTML/Element/Text('where', 'html/element/Text')`**
+
+where : 
+- `beforebegin`
+- `afterbegin`
+- `beforeend`
+- `afterend`
+
+![insert adjacent html](/img/insert-adjacent-html.png)
+
+
