@@ -33,34 +33,36 @@ There are a total of [12 node types](https://dom.spec.whatwg.org/#node). Altough
 - Comment
 
 ## Move in the DOM
-For all nodes: `parentNode`
-- `childNodes`
-- `firstChild`
-- `lastChild`
-- `previousSibling`
-- `nextSibling`
+For all nodes: 
+- `document.node.parentNode`
+- `document.node.childNodes` : return a collection of all child nodes, including text node
+- `document.node.firstChild`
+- `document.node.lastChild`
+- `document.node.previousSibling`
+- `document.node.nextSibling`
 
 For element nodes only: 
-- `parentElement`
-- `children`
-- `firstElementChild`
-- `lastElementChild`
-- `previousElementSibling` 
-- `nextElementSibling`
+- `document.elem.parentElement`
+- `document.elem.children`
+- `document.elem.firstElementChild`
+- `document.elem.lastElementChild`
+- `document.elem.previousElementSibling` 
+- `document.elem.nextElementSibling`
 
 ## Search in the DOM
 **getElements***
-- `getElementById`
-- `getElementsByName`
-- `getElementsByTagName`
-- `getElementsByClassName`
+- `document.getElementById`
+- `document.getElementsByName`
+- `document.getElementsByTagName`
+- `document.getElementsByClassName`
 
 **querySelector(css)**
-- `querySelectorAll()`
-- `querySelector()`
+- `document.querySelectorAll()`
+- `document.querySelector()`
 
 `getElements` return a **live** collection, meaning they reflect the current state of the DOM.
 In the code below, `divs` is assigned a value using `getElementsByTagName`. Thus, when `divs.length`is alerted the second time, it nows alert two because a div was added between the first and second alert.
+
 ```html
 <div>First div</div>
 
@@ -103,7 +105,7 @@ In this example `divs` was assigned a value using `querySelectorAll`. Thus when 
 
 ### Some useful methods :
 
-- `innerHTML` : Targets everything **inside** the html element as a **string**. It only works witl `elements`
+- `elem.innerHTML` : Targets everything **inside** the html element as a **string**. It only works witl `elements`
 
 Thus, you can append "new" html inside of your element with concatenation.
 ```html
@@ -112,9 +114,9 @@ chatDiv.innerHTML += "How goes?";
 ``` 
 However, it delete's the old html, then, loads the new one. **Warning**, this is to take into consideration when user it inside elements containing images, svg and such.
 
-- `outerHTML` : The full HTML of the element. A write operation into elem.outerHTML does not touch elem itself. Instead it gets replaced with the new HTML in the outer context.
+- `elem.outerHTML` : The full HTML of the element. A write operation into elem.outerHTML does not touch elem itself. Instead it gets replaced with the new HTML in the outer context.
 
-- `textContent` : The text inside the element: HTML minus all `tags`. Writing into it puts the text inside the element, with all special characters and tags treated exactly as text. Can safely insert user-generated text and protect from unwanted HTML insertions. For instance, calling `textContent` on the div would remove both `h1` and `p` tags. `alert(news.textContent)` would return : *"I'm an H1 I'm a paragraph"* in a single string.
+- `elem.textContent` : The text inside the element: HTML minus all `tags`. Writing into it puts the text inside the element, with all special characters and tags treated exactly as text. Can safely insert user-generated text and protect from unwanted HTML insertions. For instance, calling `textContent` on the div would remove both `h1` and `p` tags. `alert(news.textContent)` would return : *"I'm an H1 I'm a paragraph"* in a single string.
 ```html
 <div id="news">
   <h1>I'm an H1</h1>
@@ -122,9 +124,9 @@ However, it delete's the old html, then, loads the new one. **Warning**, this is
 </div>
 ```
 
-- `data` : the `data` is similar to `innerHTML` but for `text node` 
+- `elem.data` : the `data` is similar to `innerHTML` but for `text node` 
 
-- `hidden` : When set to true, does the same as CSS display:none.
+- `elem.hidden` : When set to true, does the same as CSS display:none.
 
 ## Attributes and properties
 
@@ -170,10 +172,8 @@ We could use `div.id` or `input.type`. However, it only works for **standard** t
 
 ## Modifying the document
 
-To create a node :
-
--  `document.createElement(tag)`
--  `document.createTextNode(tag)`
+-  `document.createElement(tag)` : create an element node
+-  `document.createTextNode(tag)` : create a text node
 
 ### Insertion methods
 
